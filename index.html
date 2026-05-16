@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Metrics Jobs | Premium Applicant Matching Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --brand-primary: #0284c7;
+            --brand-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            --accent-success: #10b981;
+            --bg-dark-core: #0f172a;
+            --bg-dark-panel: #1e293b;
+            --text-muted: #64748b;
+            --text-main: #0f172a;
+            --glass-white: rgba(255, 255, 255, 0.85);
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: #f8fafc; color: var(--text-main); height: 100vh; overflow: hidden; }
+        .hidden { display: none !important; }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* ================= AUTH & SURVEY DESIGN ================= */
+        .auth-wrapper { height: 100vh; overflow-y: auto; background: radial-gradient(circle at top right, #f0fdf4 0%, #f0f9ff 100%); padding: 50px 20px; }
+        .auth-card { max-width: 800px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.05); padding: 45px; border: 1px solid rgba(226,232,240,0.8); }
+        .brand-header { text-align: center; margin-bottom: 40px; }
+        .brand-header h1 { font-size: 32px; font-weight: 800; background: var(--brand-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .survey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+        .full-span { grid-column: span 2; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        label { font-size: 13px; font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select, textarea { padding: 14px 16px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 15px; background: #f8fafc; transition: var(--transition-smooth); outline: none; }
+        input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); background: white; box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15); }
+        
+        .section-divider { grid-column: span 2; margin: 25px 0 10px 0; padding-bottom: 10px; border-bottom: 2px solid #f1f5f9; font-size: 15px; font-weight: 800; color: var(--brand-primary); display: flex; align-items: center; gap: 10px; }
+        .btn-submit { background: var(--brand-gradient); color: white; border: none; padding: 16px; font-weight: 700; border-radius: 12px; font-size: 16px; cursor: pointer; transition: var(--transition-smooth); width: 100%; margin-top: 30px; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.4); }
+
+        /* ================= PREMIUM WAITLIST ANIMATED GATE ================= */
+        .waitlist-container { height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background: #0f172a; position: relative; overflow: hidden; }
+        .bg-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(2,132,199,0.15) 0%, transparent 70%); top: -10%; right: -10%; animation: floatGlow 10s infinite alternate; }
+        @keyframes floatGlow { 0% { transform: translate(0,0); } 100% { transform: translate(-50px, 50px); } }
+        
+        .waitlist-card { position: relative; z-index: 10; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); padding: 50px 40px; border-radius: 28px; max-width: 580px; text-align: center; color: white; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+        
+        /* High-fidelity CSS Motion Graphics Loop */
+        .radar-box { position: relative; width: 120px; height: 120px; margin: 0 auto 30px auto; display: flex; align-items: center; justify-content: center; }
+        .radar-circle { position: absolute; width: 100%; height: 100%; border: 2px solid var(--brand-primary); border-radius: 50%; opacity: 0; animation: pulseRadar 3s cubic-bezier(0.215, 0.610, 0.355, 1) infinite; }
+        .radar-circle:nth-child(2) { animation-delay: 1s; }
+        .radar-circle:nth-child(3) { animation-delay: 2s; }
+        .radar-core { width: 50px; height: 50px; background: var(--brand-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 0 25px var(--brand-primary); z-index: 2; }
+        @keyframes pulseRadar { 0% { transform: scale(0.4); opacity: 0; } 50% { opacity: 0.5; } 100% { transform: scale(1.3); opacity: 0; } }
+
+        /* ================= APPLICANT APPROVED DASHBOARD ================= */
+        .dashboard-layout { display: grid; grid-template-columns: 280px 1fr; height: 100vh; width: 100vw; }
+        .sidebar { background: var(--bg-dark-core); color: white; padding: 30px 24px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid rgba(255,255,255,0.05); }
+        .menu-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 12px; cursor: pointer; color: #94a3b8; font-weight: 600; margin-bottom: 8px; transition: var(--transition-smooth); }
+        .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.06); color: white; }
+        .menu-item.active { color: #38bdf8; }
+
+        .workspace { overflow-y: auto; height: 100vh; background: #f1f5f9; }
+        .content-frame { padding: 40px; max-width: 1300px; margin: 0 auto; }
+
+        /* Advanced Fluid Image Slideshow */
+        .hero-slider { position: relative; width: 100%; height: 320px; border-radius: 24px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 15px 30px rgba(0,0,0,0.04); }
+        .slide-frame { position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transform: scale(1.03); transition: opacity 1.2s ease, transform 1.2s ease; display: flex; align-items: flex-end; }
+        .slide-frame.active { opacity: 1; transform: scale(1); }
+        .slide-tint { background: linear-gradient(180deg, rgba(15,23,42,0) 20%, rgba(15,23,42,0.85) 100%); width: 100%; height: 100%; display: flex; align-items: flex-end; padding: 45px; }
+
+        /* Live Feed Grid Architecture */
+        .feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .jobs-matrix { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }
+        .job-card { background: white; border-radius: 20px; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01); border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; transition: var(--transition-smooth); position: relative; overflow: hidden; }
+        .job-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); border-color: #cbd5e1; }
+        
+        .time-badge { position: absolute; top: 24px; right: 24px; font-size: 12px; font-weight: 700; color: var(--brand-primary); background: #f0f9ff; padding: 6px 12px; border-radius: 20px; }
+        .salary-label { font-size: 20px; font-weight: 800; color: #0f172a; margin: 15px 0; display: flex; align-items: center; gap: 6px; }
+
+        /* Corporate Identity Profile Structure */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 40px; border-radius: 24px; border: 1px solid #e2e8f0; margin-top: 20px; }
+        .stat-badge { background: #f8fafc; padding: 20px; border-radius: 16px; text-align: center; border: 1px solid #f1f5f9; }
+
+        /* Realtime Communication Sub-system View */
+        .messenger-view { display: flex; flex-direction: column; height: 100vh; background: #e2e8f0; }
+        .msg-container { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #f8fafc; }
+        .msg-bubble { max-width: 65%; padding: 12px 18px; border-radius: 16px; font-size: 15px; line-height: 1.5; }
+        .msg-bubble.sent { background: var(--brand-primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .msg-bubble.received { background: white; color: black; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body>
+
+    <div id="screen-auth" class="auth-wrapper">
+        <div class="auth-card">
+            <div class="brand-header">
+                <h1>ZUKA JOBS</h1>
+                <p style="color: var(--text-muted); font-size: 15px; margin-top: 5px;" id="auth-sub">Global Talent Placement Pipeline — Enterprise Configuration Panel</p>
+            </div>
+
+            <div id="admin-intercept-banner" class="hidden" style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:12px; padding:20px; text-align:center; margin-bottom:20px;">
+                <h3 style="color:#1e40af; font-size:16px; font-weight:700;"><i class="fa-solid fa-user-gear"></i> Active Admin Session Active</h3>
+                <p style="color:#1e3a8a; font-size:14px; margin-top:4px; margin-bottom:15px;">You are currently logged in as the master system administrator.</p>
+                <a href="admin.html" style="background:var(--brand-primary); color:white; text-decoration:none; padding:10px 20px; font-weight:700; border-radius:8px; display:inline-block; font-size:14px;">Open Administrative Console</a>
+            </div>
+
+            <form id="form-registration">
+                <div class="survey-grid">
+                    <div class="form-group">
+                        <label>Secure Identification Email</label>
+                        <input type="email" id="inp-email" placeholder="example@domain.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Security Key Access Password</label>
+                        <input type="password" id="inp-password" placeholder="Create secure access code" required>
+                    </div>
+
+                    <div class="section-divider"><i class="fa-solid fa-user-tie"></i> 1. Legal Personal Identification Survey</div>
+                    <div class="form-group">
+                        <label>Legal Full Name</label>
+                        <input type="text" id="srv-name" placeholder="As written on National ID card" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Primary Phone Number</label>
+                        <input type="tel" id="srv-phone" placeholder="Active phone line" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Home County / Town of Origin</label>
+                        <input type="text" id="srv-origin" placeholder="e.g. Kiambu, Kamwangi" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Current Residential </label>
+                        <input type="text" id="srv-residence" placeholder="Where you currently reside" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Marital Classification</label>
+                        <select id="srv-marital">
+                            <option value="Single">Single Status</option>
+                            <option value="Married">Married Status</option>
+                            <option value="Divorced">Divorced Status</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>National Citizenship Status</label>
+                        <select id="srv-citizen">
+                            <option value="Yes">Yes, Legal Kenyan Citizen</option>
+                            <option value="No">No, Foreign / International Worker</option>
+                        </select>
+                    </div>
+
+                    <div class="section-divider"><i class="fa-solid fa-graduation-cap"></i> 2. Professional Qualifications & Aptitude</div>
+                    <div class="form-group">
+                        <label>Highest Academic Attainment</label>
+                        <select id="srv-education">
+                            <option value="High School">High School Diploma</option>
+                            <option value="Diploma">Technical College Diploma</option>
+                            <option value="Degree">University Bachelor's Degree</option>
+                            <option value="Masters">Post-Graduate Master's Degree</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Years of Practical Field Expertise</label>
+                        <input type="number" id="srv-experience" min="0" placeholder="e.g. 2">
+                    </div>
+                    <div class="form-group full-span">
+                        <label>Primary Professional Capability Stack (Skills Summary)</label>
+                        <textarea id="srv-skills" rows="3" placeholder="List your key skills and certifications..."></textarea>
+                    </div>
+
+                    <div class="section-divider"><i class="fa-solid fa-people-roof"></i> 3. Family Lineage & Emergency Kin Coordinates</div>
+                    <div class="form-group">
+                        <label>Kinship Classification Target</label>
+                        <select id="srv-kin-type">
+                            <option value="Mother">Mother</option>
+                            <option value="Father">Father</option>
+                            <option value="Guardian">Legal Guardian</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Kin Full Legal Name</label>
+                        <input type="text" id="srv-kin-name" placeholder="Full name of designated contact" required>
+                    </div>
+                    <div class="form-group full-span">
+                        <label>Kin Active Telephone Coordinates</label>
+                        <input type="tel" id="srv-kin-phone" placeholder="Emergency contact phone number" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit" id="btn-auth-action">Complete Survey Profile & Request Admission</button>
+            </form>
+            
+            <div id="auth-switch-footer" style="text-align:center; margin-top:25px; font-size:14px; color: var(--text-muted);">
+                <p id="toggle-hint">Already filed your profile credentials? <span id="auth-toggle-trigger" style="color:var(--brand-primary); font-weight:700; cursor:pointer;">Access Account Terminal</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-waitlist" class="waitlist-container hidden">
+        <div class="bg-glow"></div>
+        <div class="waitlist-card">
+            <div class="radar-box">
+                <div class="radar-circle"></div>
+                <div class="radar-circle"></div>
+                <div class="radar-circle"></div>
+                <div class="radar-core"><i class="fa-solid fa-fingerprint"></i></div>
+            </div>
+            <h2 style="font-size:26px; font-weight:800; margin-bottom:12px; letter-spacing:-0.5px;">Security Clearance Impending</h2>
+            <p style="color:#94a3b8; font-size:15px; line-height:1.6; margin-bottom:25px;">
+                Your background survey properties, parent indicators, and citizenship credentials have been compiled into an execution block. Zuka Jobs system administrators are auditing your node parameters for verification.
+            </p>
+            
+            <div style="background:rgba(2,132,199,0.1); border:1px solid rgba(2,132,199,0.2); padding:16px; border-radius:12px; margin-bottom:30px;">
+                <span style="font-size:13px; font-weight:700; color:#38bdf8; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i> PIPELINE LISTENING FOR REAL-TIME PERMISSION DISPATCH
+                </span>
+            </div>
+            
+            <button onclick="disconnectSession()" style="background:transparent; border:1px solid #475569; color:#94a3b8; padding:12px 24px; border-radius:10px; font-weight:600; cursor:pointer;">Terminate Session Securely</button>
+        </div>
+    </div>
+
+    <div id="screen-dashboard" class="dashboard-layout hidden">
+        <aside class="sidebar">
+            <div>
+                <div style="font-size:22px; font-weight:800; background:var(--brand-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:40px;"><i class="fa-solid fa-bolt"></i> ZUKA JOBS</div>
+                <nav>
+                    <div class="menu-item active" id="tab-jobs" onclick="navigateTab('jobs')"><i class="fa-solid fa-briefcase"></i> Job Feed Matrix</div>
+                    <div class="menu-item" id="tab-chat" onclick="navigateTab('chat')"><i class="fa-solid fa-headset"></i> Support Terminal</div>
+                    <div class="menu-item" id="tab-about" onclick="navigateTab('about')"><i class="fa-solid fa-circle-info"></i> Corporate Profile</div>
+                </nav>
+            </div>
+            <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; display:flex; align-items:center; justify-content:between;">
+                <div>
+                    <h4 id="lbl-profile-name" style="font-size:14px; font-weight:700; max-width:160px; overflow:hidden; text-overflow:ellipsis;">User Element</h4>
+                    <span style="font-size:11px; color:#10b981; font-weight:600;"><i class="fa-solid fa-circle" style="font-size:8px;"></i> Connection Verified</span>
+                </div>
+                <button onclick="disconnectSession()" class="logout-btn" style="background:none; border:none; color:#64748b; font-size:18px; cursor:pointer; margin-left:auto;"><i class="fa-solid fa-power-off"></i></button>
+            </div>
+        </aside>
+
+        <main class="workspace">
+            <div id="view-jobs" class="content-frame">
+                <div class="hero-slider" id="slider-frame-wrapper"></div>
+                <div class="feed-header">
+                    <div>
+                        <h2 style="font-size:24px; font-weight:800;">Realtime Employment Feed</h2>
+                        <p style="color:var(--text-muted); font-size:14px;">High-yield computational tasks matching your filed parameters</p>
+                    </div>
+                </div>
+                <div class="jobs-matrix" id="feed-jobs-target"></div>
+            </div>
+
+            <div id="view-chat" class="messenger-view hidden">
+                <div style="background:white; padding:20px 40px; border-bottom:1px solid #e2e8f0; display:flex; align-items:center;">
+                    <div>
+                        <h3 style="font-size:16px; font-weight:700;">Central Support Console</h3>
+                        <p style="color:#10b981; font-size:12px; font-weight:600;"><i class="fa-solid fa-bolt"></i> Live Admin Pipeline Connected</p>
+                    </div>
+                </div>
+                <div class="msg-container" id="box-chat-messages"></div>
+                <div style="background:white; padding:20px 40px; display:flex; align-items:center; gap:20px; border-top:1px solid #e2e8f0;">
+                    <input type="text" id="inp-chat-message" style="flex:1; background:#f1f5f9; padding: 14px;" placeholder="Type support payload transmission code...">
+                    <button id="btn-chat-send" style="background:var(--brand-gradient); color:white; border:none; width:48px; height:48px; border-radius:50%; cursor:pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+
+            <div id="view-about" class="content-frame hidden">
+                <h2 style="font-size:28px; font-weight:800; margin-bottom:10px;">Corporate System Infrastructure</h2>
+                <p style="color:var(--text-muted); margin-bottom:30px;">Historical data parameters and institutional matrix configurations.</p>
+                
+                <div class="about-grid">
+                    <div>
+                        <h3 style="margin-bottom:15px; font-weight:700;">Platform Evolution Abstract</h3>
+                        <p style="color:#475569; line-height:1.7; font-size:15px; margin-bottom:15px;">
+                            Established in the year <b>2001</b> under master administrative conceptual design by <b>Yuengha</b>, Zuka Jobs has evolved into an elite labor-matching framework. 
+                        </p>
+                        <p style="color:#475569; line-height:1.7; font-size:15px;">
+                            The platform implements automated resource routing mechanics designed to enforce a performance-scaled compensation model: <b>it systematically dispenses higher payment ratios to workforce nodes that display higher data volume and task completion operations.</b>
+                        </p>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                        <div class="stat-badge">
+                            <i class="fa-solid fa-users" style="font-size:28px; color:var(--brand-primary); margin-bottom:10px;"></i>
+                            <h4 style="font-size:24px; font-weight:800;">20,000+</h4>
+                            <p style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-top:5px;">Workers Employed</p>
+                        </div>
+                        <div class="stat-badge">
+                            <i class="fa-solid fa-timeline" style="font-size:28px; color:var(--accent-success); margin-bottom:10px;"></i>
+                            <h4 style="font-size:24px; font-weight:800;">2001</h4>
+                            <p style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-top:5px;">Operations Inception</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getDatabase, ref, set, onValue, onDisconnect } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyASAAHHnfHWLNfeA2jHQYCvycc1W0fiySQ",
+            authDomain: "job-portal-2e4a1.firebaseapp.com",
+            projectId: "job-portal-2e4a1",
+            storageBucket: "job-portal-2e4a1.firebasestorage.app",
+            messagingSenderId: "555297272094",
+            appId: "1:555297272094:web:c321a02e8ada726db8590f"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const rtdb = getDatabase(app);
+
+        let activeUser = null;
+        let activeUserData = null;
+        let userLoginInterfaceFlag = false;
+        let messagingListenerUnsubscribe = null;
+
+        const slidesDataset = [
+            { title: "Automated Placement Infrastructure", desc: "Performance-scaled data routing framework delivering maximum conversion efficiency.", url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" },
+            { title: "Dynamic Task Compensation Matrix", desc: "Algorithmic resource pipelines engineered to award higher compensation directly to active workers.", url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200" }
+        ];
+
+        // FIXED AUTH ENGINE: Stops logging out admin account sessions automatically
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                if (user.email === "picyberm@gmail.com") {
+                    document.getElementById('form-registration').classList.add('hidden');
+                    document.getElementById('auth-switch-footer').classList.add('hidden');
+                    document.getElementById('admin-intercept-banner').classList.remove('hidden');
+                    transitionViewFrame(document.getElementById('screen-auth'));
+                    return;
+                }
+                
+                // Hide intercept if an applicant signs in
+                document.getElementById('admin-intercept-banner').classList.add('hidden');
+                document.getElementById('form-registration').classList.remove('hidden');
+                document.getElementById('auth-switch-footer').classList.remove('hidden');
+
+                activeUser = user;
+                initializeRealtimeTelemetry(user);
+                
+                onSnapshot(doc(db, "users", user.uid), (snapshot) => {
+                    if (snapshot.exists()) {
+                        activeUserData = snapshot.data();
+                        document.getElementById('lbl-profile-name').innerText = activeUserData.fullName;
+                        
+                        if (activeUserData.status === "pending") {
+                            transitionViewFrame(document.getElementById('screen-waitlist'));
+                        } else if (activeUserData.status === "approved") {
+                            transitionViewFrame(document.getElementById('screen-dashboard'));
+                            buildDashboardEngines();
+                        } else {
+                            alert("Access permissions revoked."); disconnectSession();
+                        }
+                    }
+                });
+            } else {
+                activeUser = null;
+                if(messagingListenerUnsubscribe) messagingListenerUnsubscribe();
+                document.getElementById('admin-intercept-banner').classList.add('hidden');
+                document.getElementById('form-registration').classList.remove('hidden');
+                document.getElementById('auth-switch-footer').classList.remove('hidden');
+                transitionViewFrame(document.getElementById('screen-auth'));
+            }
+        });
+
+        document.getElementById('form-registration').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('inp-email').value.trim();
+            const pass = document.getElementById('inp-password').value;
+
+            if (userLoginInterfaceFlag) {
+                try { await signInWithEmailAndPassword(auth, email, pass); }
+                catch(err) { alert("Authentication Denied: " + err.message); }
+            } else {
+                const sData = {
+                    fullName: document.getElementById('srv-name').value.trim(),
+                    phoneNumber: document.getElementById('srv-phone').value.trim(),
+                    homeLocation: document.getElementById('srv-origin').value.trim(),
+                    currentResidence: document.getElementById('srv-residence').value.trim(),
+                    maritalStatus: document.getElementById('srv-marital').value,
+                    isKenyan: document.getElementById('srv-citizen').value,
+                    education: document.getElementById('srv-education').value,
+                    experienceYears: document.getElementById('srv-experience').value,
+                    skillsBlock: document.getElementById('srv-skills').value.trim(),
+                    kinRelationship: document.getElementById('srv-kin-type').value,
+                    kinName: document.getElementById('srv-kin-name').value.trim(),
+                    kinPhone: document.getElementById('srv-kin-phone').value.trim()
+                };
+
+                try {
+                    const res = await createUserWithEmailAndPassword(auth, email, pass);
+                    await setDoc(doc(db, "users", res.user.uid), {
+                        uid: res.user.uid, email, passwordTextHidden: pass,
+                        ...sData, status: "pending", createdAt: serverTimestamp()
+                    });
+                } catch(err) { alert("Survey Registration Halted: " + err.message); }
+            }
+        });
+
+        document.getElementById('auth-toggle-trigger').addEventListener('click', () => {
+            userLoginInterfaceFlag = !userLoginInterfaceFlag;
+            const surveyFields = document.getElementById('form-registration').querySelectorAll('.section-divider, .form-group:not(:nth-child(1)):not(:nth-child(2))');
+            if(userLoginInterfaceFlag) {
+                surveyFields.forEach(el => el.classList.add('hidden'));
+                document.getElementById('auth-sub').innerText = "Access your validated operational task workspace";
+                document.getElementById('btn-auth-action').innerText = "Authorize & Terminate Access Lock";
+                document.getElementById('toggle-hint').innerHTML = `Need platform onboarding? <span id="auth-toggle-trigger" style="color:var(--brand-primary); font-weight:700; cursor:pointer;">Initiate Information Survey</span>`;
+            } else {
+                surveyFields.forEach(el => el.classList.remove('hidden'));
+                document.getElementById('auth-sub').innerText = "Global Talent Placement Pipeline — Enterprise Configuration Panel";
+                document.getElementById('btn-auth-action').innerText = "Complete Survey Profile & Request Admission";
+                document.getElementById('toggle-hint').innerHTML = `Already filed your profile credentials? <span id="auth-toggle-trigger" style="color:var(--brand-primary); font-weight:700; cursor:pointer;">Access Account Terminal</span>`;
+            }
+            document.getElementById('auth-toggle-trigger').addEventListener('click', arguments.callee);
+        });
+
+        function transitionViewFrame(target) {
+            document.getElementById('screen-auth').classList.add('hidden');
+            document.getElementById('screen-waitlist').classList.add('hidden');
+            document.getElementById('screen-dashboard').classList.add('hidden');
+            target.classList.remove('hidden');
+        }
+
+        function initializeRealtimeTelemetry(user) {
+            const presenceRef = ref(rtdb, `status/${user.uid}`);
+            onValue(ref(rtdb, '.info/connected'), (snap) => {
+                if(snap.val() === true) {
+                    onDisconnect(presenceRef).set({ state: 'offline', epoch: Date.now() });
+                    set(presenceRef, { state: 'online', alias: user.email, epoch: Date.now() });
+                }
+            });
+        }
+
+        function disconnectSession() { signOut(auth).then(() => window.location.reload()); }
+        window.disconnectSession = disconnectSession;
+
+        function buildDashboardEngines() {
+            const sWrapper = document.getElementById('slider-frame-wrapper');
+            sWrapper.innerHTML = "";
+            slidesDataset.forEach((sl, idx) => {
+                const fr = document.createElement('div');
+                fr.className = `slide-frame ${idx === 0 ? 'active' : ''}`;
+                fr.style.backgroundImage = `url('${sl.url}')`;
+                fr.innerHTML = `<div class="slide-tint"><div style="color:white;"><h3>${sl.title}</h3><p style="opacity:0.8; font-size:14px; margin-top:5px;">${sl.desc}</p></div></div>`;
+                sWrapper.appendChild(fr);
+            });
+            let slPtr = 0;
+            if(window.sliderInterval) clearInterval(window.sliderInterval);
+            window.sliderInterval = setInterval(() => {
+                const frames = sWrapper.querySelectorAll('.slide-frame');
+                if(!frames.length) return;
+                frames[slPtr].classList.remove('active');
+                slPtr = (slPtr + 1) % frames.length;
+                frames[slPtr].classList.add('active');
+            }, 5000);
+
+            onSnapshot(collection(db, "posted_jobs"), (snap) => {
+                const targetGrid = document.getElementById('feed-jobs-target');
+                targetGrid.innerHTML = "";
+                if(snap.empty) {
+                    targetGrid.innerHTML = `<div class="full-span" style="text-align:center; padding:40px; color:var(--text-muted);">No corporate system tasks compiled by administrator nodes yet.</div>`;
+                    return;
+                }
+                snap.forEach(docDoc => {
+                    const j = docDoc.data();
+                    const card = document.createElement('div');
+                    card.className = "job-card";
+                    card.innerHTML = `
+                        <div>
+                            <span class="time-badge"><i class="fa-regular fa-clock"></i> ${j.relativeTime || 'Posted 2 min ago'}</span>
+                            <h3 style="font-size:18px; font-weight:700; margin-bottom:4px; max-width:75%;">${j.title}</h3>
+                            <h5 style="color:var(--brand-primary); font-weight:700; font-size:13px; margin-bottom:12px; text-transform:uppercase;">${j.company}</h5>
+                            <p style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:20px;">${j.description}</p>
+                        </div>
+                        <div>
+                            <div class="salary-label"><span style="font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Yield Metric:</span> ${j.payAmount || 'Ksh 3,500 / Day'}</div>
+                            <button class="btn-submit" style="padding:12px; font-size:14px; margin-top:0;" onclick="alert('Operation Registry Filed! Administrative task node informed.')">Apply For Task</button>
+                        </div>
+                    `;
+                    targetGrid.appendChild(card);
+                });
+            });
+
+            if(messagingListenerUnsubscribe) messagingListenerUnsubscribe();
+            messagingListenerUnsubscribe = onSnapshot(query(collection(db, "chats", activeUser.uid, "messages"), orderBy("timestamp", "asc")), (snap) => {
+                const box = document.getElementById('box-chat-messages');
+                box.innerHTML = "";
+                snap.forEach(d => {
+                    const m = d.data();
+                    const el = document.createElement('div');
+                    el.className = `msg-bubble ${m.senderId === activeUser.uid ? 'sent' : 'received'}`;
+                    el.innerText = m.message;
+                    box.appendChild(el);
+                });
+                box.scrollTop = box.scrollHeight;
+            });
+        }
+
+        document.getElementById('btn-chat-send').addEventListener('click', postUserMsg);
+        document.getElementById('inp-chat-message').addEventListener('keypress', (e) => { if(e.key==='Enter') postUserMsg(); });
+
+        async function postUserMsg() {
+            const input = document.getElementById('inp-chat-message');
+            const txt = input.value.trim(); if(!txt) return; input.value = "";
+            await addDoc(collection(db, "chats", activeUser.uid, "messages"), { senderId: activeUser.uid, message: txt, timestamp: serverTimestamp() });
+            await setDoc(doc(db, "chats", activeUser.uid), { lastMessage: txt, applicantName: activeUserData.fullName, applicantUid: activeUser.uid, unreadAdmin: true }, { merge: true });
+        }
+
+        window.navigateTab = function(t) {
+            document.getElementById('view-jobs').classList.add('hidden');
+            document.getElementById('view-chat').classList.add('hidden');
+            document.getElementById('view-about').classList.add('hidden');
+            document.getElementById('tab-jobs').classList.remove('active');
+            document.getElementById('tab-chat').classList.remove('active');
+            document.getElementById('tab-about').classList.remove('active');
+
+            if(t === 'jobs') { document.getElementById('view-jobs').classList.remove('hidden'); document.getElementById('tab-jobs').classList.add('active'); }
+            else if(t === 'chat') { document.getElementById('view-chat').classList.remove('hidden'); document.getElementById('tab-chat').classList.add('active'); document.getElementById('box-chat-messages').scrollTop = document.getElementById('box-chat-messages').scrollHeight; }
+            else if(t === 'about') { document.getElementById('view-about').classList.remove('hidden'); document.getElementById('tab-about').classList.add('active'); }
+        };
+    </script>
+</body>
+</html>
