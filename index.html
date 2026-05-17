@@ -21,13 +21,7 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        
-        /* Mobile-friendly overflow adaptation */
         body { background-color: #f8fafc; color: var(--text-main); height: 100vh; overflow: hidden; }
-        @media (max-width: 768px) {
-            body { height: auto; overflow: auto; }
-        }
-        
         .hidden { display: none !important; }
 
         /* Custom Scrollbars */
@@ -37,42 +31,33 @@
 
         /* ================= AUTH & SURVEY DESIGN ================= */
         .auth-wrapper { height: 100vh; overflow-y: auto; background: radial-gradient(circle at top right, #f0fdf4 0%, #f0f9ff 100%); padding: 50px 20px; }
-        @media (max-width: 480px) { .auth-wrapper { padding: 20px 10px; height: auto; } }
-        
-        .auth-card { max-width: 800px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.05); padding: 45px; border: 1px solid rgba(226,232,240,0.8); }
-        @media (max-width: 768px) { .auth-card { padding: 25px 20px; border-radius: 16px; } }
-        
+        .auth-card { max-width: 800px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.05); padding: 45px; border: 1px solid rgba(226,232,240,0.8); position: relative; }
         .brand-header { text-align: center; margin-bottom: 40px; }
         .brand-header h1 { font-size: 32px; font-weight: 800; background: var(--brand-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        @media (max-width: 480px) { .brand-header h1 { font-size: 26px; } }
         
-        /* Survey Responsive Grid */
         .survey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
-        @media (max-width: 640px) { .survey-grid { grid-template-columns: 1fr; gap: 16px; } }
-        
         .full-span { grid-column: span 2; }
-        @media (max-width: 640px) { .full-span { grid-column: span 1; } }
-        
-        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; position: relative; }
         label { font-size: 13px; font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select, textarea { padding: 14px 16px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 15px; background: #f8fafc; transition: var(--transition-smooth); outline: none; width: 100%; }
+        input, select, textarea { padding: 14px 16px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 15px; background: #f8fafc; transition: var(--transition-smooth); outline: none; }
         input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); background: white; box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15); }
         
         .section-divider { grid-column: span 2; margin: 25px 0 10px 0; padding-bottom: 10px; border-bottom: 2px solid #f1f5f9; font-size: 15px; font-weight: 800; color: var(--brand-primary); display: flex; align-items: center; gap: 10px; }
-        @media (max-width: 640px) { .section-divider { grid-column: span 1; font-size: 14px; } }
-        
         .btn-submit { background: var(--brand-gradient); color: white; border: none; padding: 16px; font-weight: 700; border-radius: 12px; font-size: 16px; cursor: pointer; transition: var(--transition-smooth); width: 100%; margin-top: 30px; }
         .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.4); }
 
+        /* Real-time Visual Integrity Indicators & Password Helpers */
+        .pass-view-toggle { position: absolute; right: 16px; top: 44px; cursor: pointer; color: #64748b; z-index: 5; }
+        .strength-meter-bar { height: 4px; border-radius: 2px; background: #e2e8f0; margin-top: 6px; transition: width 0.3s ease, background 0.3s ease; width: 0%; }
+        .completion-track-node { position: sticky; top: -45px; background: white; padding: 10px 0; z-index: 50; border-bottom: 1px solid #f1f5f9; margin-bottom: 15px; }
+        .completion-track-fill { height: 6px; border-radius: 3px; background: linear-gradient(90deg, #38bdf8, #0284c7); width: 0%; transition: width 0.4s ease; }
+
         /* ================= PREMIUM WAITLIST ANIMATED GATE ================= */
-        .waitlist-container { height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background: #0f172a; position: relative; overflow: hidden; padding: 20px; }
-        @media (max-width: 768px) { .waitlist-container { height: auto; min-height: 100vh; overflow-y: auto; } }
-        
+        .waitlist-container { height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background: #0f172a; position: relative; overflow: hidden; }
         .bg-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(2,132,199,0.15) 0%, transparent 70%); top: -10%; right: -10%; animation: floatGlow 10s infinite alternate; }
         @keyframes floatGlow { 0% { transform: translate(0,0); } 100% { transform: translate(-50px, 50px); } }
         
-        .waitlist-card { position: relative; z-index: 10; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); padding: 50px 40px; border-radius: 28px; max-width: 580px; width: 100%; text-align: center; color: white; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
-        @media (max-width: 480px) { .waitlist-card { padding: 30px 20px; border-radius: 20px; } }
+        .waitlist-card { position: relative; z-index: 10; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); padding: 50px 40px; border-radius: 28px; max-width: 580px; text-align: center; color: white; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
         
         /* High-fidelity CSS Motion Graphics Loop */
         .radar-box { position: relative; width: 120px; height: 120px; margin: 0 auto 30px auto; display: flex; align-items: center; justify-content: center; }
@@ -84,75 +69,63 @@
 
         /* ================= APPLICANT APPROVED DASHBOARD ================= */
         .dashboard-layout { display: grid; grid-template-columns: 280px 1fr; height: 100vh; width: 100vw; }
-        @media (max-width: 991px) {
-            .dashboard-layout { grid-template-columns: 1fr; height: auto; width: 100%; }
-        }
-        
         .sidebar { background: var(--bg-dark-core); color: white; padding: 30px 24px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid rgba(255,255,255,0.05); }
-        @media (max-width: 991px) {
-            .sidebar { padding: 20px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .sidebar > div:first-child { display: flex; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap; }
-            .sidebar nav { display: flex; gap: 8px; width: 100%; overflow-x: auto; padding-bottom: 5px; margin-top: 15px; }
-            .sidebar style-wrapper-element { margin-bottom: 0 !important; }
-        }
-        
-        .menu-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 12px; cursor: pointer; color: #94a3b8; font-weight: 600; margin-bottom: 8px; transition: var(--transition-smooth); white-space: nowrap; }
+        .menu-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 12px; cursor: pointer; color: #94a3b8; font-weight: 600; margin-bottom: 8px; transition: var(--transition-smooth); }
         .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.06); color: white; }
         .menu-item.active { color: #38bdf8; }
-        @media (max-width: 991px) { .menu-item { margin-bottom: 0; padding: 10px 14px; font-size: 14px; } }
 
         .workspace { overflow-y: auto; height: 100vh; background: #f1f5f9; }
-        @media (max-width: 991px) { .workspace { height: auto; overflow: visible; } }
-        
-        .content-frame { padding: 40px; max-width: 1300px; margin: 0 auto; width: 100%; }
-        @media (max-width: 768px) { .content-frame { padding: 20px 15px; } }
+        .content-frame { padding: 40px; max-width: 1300px; margin: 0 auto; }
 
-        /* Advanced Fluid Image Slideshow Framework Configuration */
-        .hero-slider { position: relative; width: 100%; height: 320px; border-radius: 24px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 15px 30px rgba(0,0,0,0.04); background-color: var(--bg-dark-core); }
-        @media (max-width: 768px) { .hero-slider { height: 220px; margin-bottom: 25px; border-radius: 16px; } }
-        
-        .slide-frame { position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0; transform: scale(1.03); transition: opacity 1.2s ease, transform 1.2s ease; display: flex; align-items: flex-end; }
+        /* Advanced Fluid Image Slideshow */
+        .hero-slider { position: relative; width: 100%; height: 320px; border-radius: 24px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 15px 30px rgba(0,0,0,0.04); }
+        .slide-frame { position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transform: scale(1.03); transition: opacity 1.2s ease, transform 1.2s ease; display: flex; align-items: flex-end; }
         .slide-frame.active { opacity: 1; transform: scale(1); }
         .slide-tint { background: linear-gradient(180deg, rgba(15,23,42,0) 20%, rgba(15,23,42,0.85) 100%); width: 100%; height: 100%; display: flex; align-items: flex-end; padding: 45px; }
-        @media (max-width: 768px) { .slide-tint { padding: 20px; } .slide-tint h3 { font-size: 16px; } .slide-tint p { font-size: 12px !important; } }
 
         /* Live Feed Grid Architecture */
-        .feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
+        .feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 20px; }
         .jobs-matrix { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }
-        @media (max-width: 480px) { .jobs-matrix { grid-template-columns: 1fr; gap: 15px; } }
-        
         .job-card { background: white; border-radius: 20px; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01); border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; transition: var(--transition-smooth); position: relative; overflow: hidden; }
         .job-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); border-color: #cbd5e1; }
-        @media (max-width: 480px) { .job-card { padding: 20px; } }
         
         .time-badge { position: absolute; top: 24px; right: 24px; font-size: 12px; font-weight: 700; color: var(--brand-primary); background: #f0f9ff; padding: 6px 12px; border-radius: 20px; }
-        @media (max-width: 480px) { .time-badge { position: static; display: inline-block; margin-bottom: 10px; width: fit-content; } }
-        
-        .salary-label { font-size: 20px; font-weight: 800; color: #0f172a; margin: 15px 0; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .salary-label { font-size: 20px; font-weight: 800; color: #0f172a; margin: 15px 0; display: flex; align-items: center; gap: 6px; }
 
         /* Corporate Identity Profile Structure */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 40px; border-radius: 24px; border: 1px solid #e2e8f0; margin-top: 20px; }
-        @media (max-width: 991px) { .about-grid { grid-template-columns: 1fr; gap: 25px; padding: 20px; } }
-        
         .stat-badge { background: #f8fafc; padding: 20px; border-radius: 16px; text-align: center; border: 1px solid #f1f5f9; }
 
         /* Realtime Communication Sub-system View */
         .messenger-view { display: flex; flex-direction: column; height: 100vh; background: #e2e8f0; }
-        @media (max-width: 991px) { .messenger-view { height: 600px; } }
-        
         .msg-container { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #f8fafc; }
-        @media (max-width: 768px) { .msg-container { padding: 15px; } }
-        
-        .msg-bubble { max-width: 65%; padding: 12px 18px; border-radius: 16px; font-size: 15px; line-height: 1.5; word-wrap: break-word; }
-        @media (max-width: 768px) { .msg-bubble { max-width: 85%; font-size: 14px; padding: 10px 14px; } }
+        .msg-bubble { max-width: 65%; padding: 12px 18px; border-radius: 16px; font-size: 15px; line-height: 1.5; }
         .msg-bubble.sent { background: var(--brand-primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
         .msg-bubble.received { background: white; color: black; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; }
+
+        @media(max-width: 768px) {
+            .dashboard-layout { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .survey-grid { grid-template-columns: 1fr; }
+            .full-span, .section-divider { grid-column: unset; }
+            .about-grid { grid-template-columns: 1fr; }
+            .feed-header { flex-direction: column; align-items: flex-start; }
+        }
     </style>
 </head>
 <body>
 
     <div id="screen-auth" class="auth-wrapper">
         <div class="auth-card">
+            
+            <div class="completion-track-node" id="survey-progress-wrapper">
+                <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:#475569; text-transform:uppercase; margin-bottom:6px;">
+                    <span>Profile Compilation Index</span>
+                    <span id="lbl-completion-pct">0% Complete</span>
+                </div>
+                <div class="completion-track-fill" id="bar-completion-fill"></div>
+            </div>
+
             <div class="brand-header">
                 <h1>ZUKA JOBS</h1>
                 <p style="color: var(--text-muted); font-size: 15px; margin-top: 5px;" id="auth-sub">Global Talent Placement Pipeline — Enterprise Configuration Panel</p>
@@ -173,6 +146,8 @@
                     <div class="form-group">
                         <label>Security Key Access Password</label>
                         <input type="password" id="inp-password" placeholder="Create secure access code" required>
+                        <i class="fa-solid fa-eye pass-view-toggle" id="trigger-pass-toggle"></i>
+                        <div class="strength-meter-bar" id="pass-strength-bar"></div>
                     </div>
 
                     <div class="section-divider"><i class="fa-solid fa-user-tie"></i> 1. Legal Personal Identification Survey</div>
@@ -186,7 +161,7 @@
                     </div>
                     <div class="form-group">
                         <label>Home County / Town of Origin</label>
-                        <input type="text" id="srv-origin" placeholder="e.g. United States, Alaska" required>
+                        <input type="text" id="srv-origin" placeholder="e.g. Kiambu, Kamwangi" required>
                     </div>
                     <div class="form-group">
                         <label>Current Residential </label>
@@ -281,15 +256,15 @@
 
     <div id="screen-dashboard" class="dashboard-layout hidden">
         <aside class="sidebar">
-            <div style="margin-bottom: 40px;" class="style-wrapper-element">
-                <div style="font-size:22px; font-weight:800; background:var(--brand-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:40px;" class="style-wrapper-element"><i class="fa-solid fa-bolt"></i> ZUKA JOBS</div>
+            <div>
+                <div style="font-size:22px; font-weight:800; background:var(--brand-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:40px;"><i class="fa-solid fa-bolt"></i> ZUKA JOBS</div>
                 <nav>
                     <div class="menu-item active" id="tab-jobs" onclick="navigateTab('jobs')"><i class="fa-solid fa-briefcase"></i> Job Feed Matrix</div>
                     <div class="menu-item" id="tab-chat" onclick="navigateTab('chat')"><i class="fa-solid fa-headset"></i> Support Terminal</div>
                     <div class="menu-item" id="tab-about" onclick="navigateTab('about')"><i class="fa-solid fa-circle-info"></i> Corporate Profile</div>
                 </nav>
             </div>
-            <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; display:flex; align-items:center; justify-content:space-between; width: 100%;">
+            <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; display:flex; align-items:center; justify-content:between;">
                 <div>
                     <h4 id="lbl-profile-name" style="font-size:14px; font-weight:700; max-width:160px; overflow:hidden; text-overflow:ellipsis;">User Element</h4>
                     <span style="font-size:11px; color:#10b981; font-weight:600;"><i class="fa-solid fa-circle" style="font-size:8px;"></i> Connection Verified</span>
@@ -306,6 +281,11 @@
                         <h2 style="font-size:24px; font-weight:800;">Realtime Employment Feed</h2>
                         <p style="color:var(--text-muted); font-size:14px;">High-yield computational tasks matching your filed parameters</p>
                     </div>
+                    
+                    <div style="display:flex; gap:10px; background:white; padding:10px 16px; border-radius:12px; border:1px solid #cbd5e1; width:100%; max-width:380px;">
+                        <i class="fa-solid fa-magnifying-glass" style="align-self:center; color:#94a3b8;"></i>
+                        <input type="text" id="job-search-input" placeholder="Search tasks by title or skill keyword..." style="border:none; background:transparent; padding:0; width:100%; font-size:14px;">
+                    </div>
                 </div>
                 <div class="jobs-matrix" id="feed-jobs-target"></div>
             </div>
@@ -320,7 +300,7 @@
                 <div class="msg-container" id="box-chat-messages"></div>
                 <div style="background:white; padding:20px 40px; display:flex; align-items:center; gap:20px; border-top:1px solid #e2e8f0;">
                     <input type="text" id="inp-chat-message" style="flex:1; background:#f1f5f9; padding: 14px;" placeholder="Type support payload transmission code...">
-                    <button id="btn-chat-send" style="background:var(--brand-gradient); color:white; border:none; width:48px; height:48px; border-radius:50%; cursor:pointer; flex-shrink: 0;"><i class="fa-solid fa-paper-plane"></i></button>
+                    <button id="btn-chat-send" style="background:var(--brand-gradient); color:white; border:none; width:48px; height:48px; border-radius:50%; cursor:pointer;"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
 
@@ -379,11 +359,55 @@
         let activeUserData = null;
         let userLoginInterfaceFlag = false;
         let messagingListenerUnsubscribe = null;
+        let originalJobsCacheList = [];
 
         const slidesDataset = [
             { title: "Automated Placement Infrastructure", desc: "Performance-scaled data routing framework delivering maximum conversion efficiency.", url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200" },
             { title: "Dynamic Task Compensation Matrix", desc: "Algorithmic resource pipelines engineered to award higher compensation directly to active workers.", url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200" }
         ];
+
+        // Web Audio Inbound Alert Notification Hook API Generator
+        const notificationSoundPing = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-600.wav');
+
+        // Toggle Password Form Element Visibility Mode Action
+        document.getElementById('trigger-pass-toggle').addEventListener('click', function() {
+            const passField = document.getElementById('inp-password');
+            if (passField.type === "password") {
+                passField.type = "text";
+                this.className = "fa-solid fa-eye-slash pass-view-toggle";
+            } else {
+                passField.type = "password";
+                this.className = "fa-solid fa-eye pass-view-toggle";
+            }
+        });
+
+        // Dynamic Field Strength Assessment Metric
+        document.getElementById('inp-password').addEventListener('input', function(e) {
+            const bar = document.getElementById('pass-strength-bar');
+            const val = e.target.value;
+            if(val.length === 0) { bar.style.width = "0%"; }
+            else if(val.length < 6) { bar.style.width = "35%"; bar.style.background = "#ef4444"; }
+            else if(val.length < 10) { bar.style.width = "70%"; bar.style.background = "#eab308"; }
+            else { bar.style.width = "100%"; bar.style.background = "#10b981"; }
+        });
+
+        // Client-side Survey Field Completeness Dynamic Metric Calculation Box
+        const inputTrackers = document.getElementById('form-registration').querySelectorAll('input, select, textarea');
+        inputTrackers.forEach(elementNode => {
+            elementNode.addEventListener('input', () => {
+                if (userLoginInterfaceFlag) return;
+                let validCount = 0;
+                inputTrackers.forEach(i => { if(i.value.trim() !== "") validCount++; });
+                const percentage = Math.round((validCount / inputTrackers.length) * 100);
+                document.getElementById('bar-completion-fill').style.width = `${percentage}%`;
+                document.getElementById('lbl-completion-pct').innerText = `${percentage}% Complete`;
+            });
+        });
+
+        // Task Matrix Filter Parsing Trigger
+        document.getElementById('job-search-input').addEventListener('input', (e) => {
+            renderJobsGridCollection(e.target.value.toLowerCase().trim());
+        });
 
         // FIXED AUTH ENGINE: Stops logging out admin account sessions automatically
         onAuthStateChanged(auth, (user) => {
@@ -391,12 +415,12 @@
                 if (user.email === "picyberm@gmail.com") {
                     document.getElementById('form-registration').classList.add('hidden');
                     document.getElementById('auth-switch-footer').classList.add('hidden');
+                    document.getElementById('survey-progress-wrapper').classList.add('hidden');
                     document.getElementById('admin-intercept-banner').classList.remove('hidden');
                     transitionViewFrame(document.getElementById('screen-auth'));
                     return;
                 }
                 
-                // Hide intercept if an applicant signs in
                 document.getElementById('admin-intercept-banner').classList.add('hidden');
                 document.getElementById('form-registration').classList.remove('hidden');
                 document.getElementById('auth-switch-footer').classList.remove('hidden');
@@ -417,6 +441,8 @@
                         } else {
                             alert("Access permissions revoked."); disconnectSession();
                         }
+                    } else {
+                        alert("Account profile has been deleted by system administrators."); disconnectSession();
                     }
                 });
             } else {
@@ -425,6 +451,7 @@
                 document.getElementById('admin-intercept-banner').classList.add('hidden');
                 document.getElementById('form-registration').classList.remove('hidden');
                 document.getElementById('auth-switch-footer').classList.remove('hidden');
+                if(!userLoginInterfaceFlag) document.getElementById('survey-progress-wrapper').classList.remove('hidden');
                 transitionViewFrame(document.getElementById('screen-auth'));
             }
         });
@@ -463,22 +490,23 @@
             }
         });
 
-        document.getElementById('auth-toggle-trigger').addEventListener('click', function handleToggle() {
+        document.getElementById('auth-toggle-trigger').addEventListener('click', () => {
             userLoginInterfaceFlag = !userLoginInterfaceFlag;
             const surveyFields = document.getElementById('form-registration').querySelectorAll('.section-divider, .form-group:not(:nth-child(1)):not(:nth-child(2))');
             if(userLoginInterfaceFlag) {
                 surveyFields.forEach(el => el.classList.add('hidden'));
+                document.getElementById('survey-progress-wrapper').classList.add('hidden');
                 document.getElementById('auth-sub').innerText = "Access your validated operational task workspace";
                 document.getElementById('btn-auth-action').innerText = "Authorize & Terminate Access Lock";
                 document.getElementById('toggle-hint').innerHTML = `Need platform onboarding? <span id="auth-toggle-trigger" style="color:var(--brand-primary); font-weight:700; cursor:pointer;">Initiate Information Survey</span>`;
             } else {
                 surveyFields.forEach(el => el.classList.remove('hidden'));
+                document.getElementById('survey-progress-wrapper').classList.remove('hidden');
                 document.getElementById('auth-sub').innerText = "Global Talent Placement Pipeline — Enterprise Configuration Panel";
                 document.getElementById('btn-auth-action').innerText = "Complete Survey Profile & Request Admission";
                 document.getElementById('toggle-hint').innerHTML = `Already filed your profile credentials? <span id="auth-toggle-trigger" style="color:var(--brand-primary); font-weight:700; cursor:pointer;">Access Account Terminal</span>`;
             }
-            document.getElementById('auth-toggle-trigger').removeEventListener('click', handleToggle);
-            document.getElementById('auth-toggle-trigger').addEventListener('click', handleToggle);
+            document.getElementById('auth-toggle-trigger').addEventListener('click', arguments.callee);
         });
 
         function transitionViewFrame(target) {
@@ -501,6 +529,43 @@
         function disconnectSession() { signOut(auth).then(() => window.location.reload()); }
         window.disconnectSession = disconnectSession;
 
+        function renderJobsGridCollection(queryFilterString = '') {
+            const targetGrid = document.getElementById('feed-jobs-target');
+            targetGrid.innerHTML = "";
+            
+            let elementsFilteredList = originalJobsCacheList;
+            if(queryFilterString !== '') {
+                elementsFilteredList = originalJobsCacheList.filter(job => 
+                    job.title.toLowerCase().includes(queryFilterString) || 
+                    job.description.toLowerCase().includes(queryFilterString) ||
+                    job.company.toLowerCase().includes(queryFilterString)
+                );
+            }
+
+            if(elementsFilteredList.length === 0) {
+                targetGrid.innerHTML = `<div class="full-span" style="text-align:center; padding:40px; color:var(--text-muted); grid-column:span 2;">No system tasks match your specific search criteria parameter filters.</div>`;
+                return;
+            }
+
+            elementsFilteredList.forEach(j => {
+                const card = document.createElement('div');
+                card.className = "job-card";
+                card.innerHTML = `
+                    <div>
+                        <span class="time-badge"><i class="fa-regular fa-clock"></i> ${j.relativeTime || 'Posted 2 min ago'}</span>
+                        <h3 style="font-size:18px; font-weight:700; margin-bottom:4px; max-width:75%;">${j.title}</h3>
+                        <h5 style="color:var(--brand-primary); font-weight:700; font-size:13px; margin-bottom:12px; text-transform:uppercase;">${j.company}</h5>
+                        <p style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:20px;">${j.description}</p>
+                    </div>
+                    <div>
+                        <div class="salary-label"><span style="font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Yield Metric:</span> ${j.payAmount || 'Ksh 3,500 / Day'}</div>
+                        <button class="btn-submit" style="padding:12px; font-size:14px; margin-top:0;" onclick="alert('Operation Registry Filed! Administrative task node informed.')">Apply For Task</button>
+                    </div>
+                `;
+                targetGrid.appendChild(card);
+            });
+        }
+
         function buildDashboardEngines() {
             const sWrapper = document.getElementById('slider-frame-wrapper');
             sWrapper.innerHTML = "";
@@ -522,33 +587,13 @@
             }, 5000);
 
             onSnapshot(collection(db, "posted_jobs"), (snap) => {
-                const targetGrid = document.getElementById('feed-jobs-target');
-                targetGrid.innerHTML = "";
-                if(snap.empty) {
-                    targetGrid.innerHTML = `<div class="full-span" style="text-align:center; padding:40px; color:var(--text-muted);">No corporate system tasks compiled by administrator nodes yet.</div>`;
-                    return;
-                }
-                snap.forEach(docDoc => {
-                    const j = docDoc.data();
-                    const card = document.createElement('div');
-                    card.className = "job-card";
-                    card.innerHTML = `
-                        <div>
-                            <span class="time-badge"><i class="fa-regular fa-clock"></i> ${j.relativeTime || 'Posted 2 min ago'}</span>
-                            <h3 style="font-size:18px; font-weight:700; margin-bottom:4px; max-width:75%;">${j.title}</h3>
-                            <h5 style="color:var(--brand-primary); font-weight:700; font-size:13px; margin-bottom:12px; text-transform:uppercase;">${j.company}</h5>
-                            <p style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:20px;">${j.description}</p>
-                        </div>
-                        <div>
-                            <div class="salary-label"><span style="font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Yield Metric:</span> ${j.payAmount || 'Ksh 3,500 / Day'}</div>
-                            <button class="btn-submit" style="padding:12px; font-size:14px; margin-top:0;" onclick="alert('Operation Registry Filed! Administrative task node informed.')">Apply For Task</button>
-                        </div>
-                    `;
-                    targetGrid.appendChild(card);
-                });
+                originalJobsCacheList = [];
+                snap.forEach(docDoc => { originalJobsCacheList.push(docDoc.data()); });
+                renderJobsGridCollection(document.getElementById('job-search-input').value.toLowerCase().trim());
             });
 
             if(messagingListenerUnsubscribe) messagingListenerUnsubscribe();
+            let stateInitSnapshotFlag = true;
             messagingListenerUnsubscribe = onSnapshot(query(collection(db, "chats", activeUser.uid, "messages"), orderBy("timestamp", "asc")), (snap) => {
                 const box = document.getElementById('box-chat-messages');
                 box.innerHTML = "";
@@ -558,7 +603,13 @@
                     el.className = `msg-bubble ${m.senderId === activeUser.uid ? 'sent' : 'received'}`;
                     el.innerText = m.message;
                     box.appendChild(el);
+                    
+                    // Ring Audio chime elements if active node shifts under live updates
+                    if(!stateInitSnapshotFlag && m.senderId === "SYSTEM_ADMIN") {
+                        notificationSoundPing.play().catch(e => console.log('Audio tracking block context hold: ', e));
+                    }
                 });
+                stateInitSnapshotFlag = false;
                 box.scrollTop = box.scrollHeight;
             });
         }
