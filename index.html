@@ -17,11 +17,11 @@
             --text-muted: #64748b;
             --text-main: #0f172a;
             --glass-white: rgba(255, 255, 255, 0.85);
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: #f8fafc; color: var(--text-main); height: 100vh; overflow: hidden; }
+        body { background-color: #f8fafc; color: var(--text-main); height: 100vh; width: 100vw; overflow: hidden; }
         .hidden { display: none !important; }
 
         /* Custom Scrollbars */
@@ -29,87 +29,97 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-        /* ================= AUTH & SURVEY DESIGN ================= */
-        .auth-wrapper { height: 100vh; overflow-y: auto; background: radial-gradient(circle at top right, #f0fdf4 0%, #f0f9ff 100%); padding: 50px 20px; }
-        .auth-card { max-width: 800px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.05); padding: 45px; border: 1px solid rgba(226,232,240,0.8); position: relative; }
-        .brand-header { text-align: center; margin-bottom: 40px; }
-        .brand-header h1 { font-size: 32px; font-weight: 800; background: var(--brand-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* ================= AUTH & SURVEY DESIGN (AUTO-ADJUSTING) ================= */
+        .auth-wrapper { height: 100vh; overflow-y: auto; background: radial-gradient(circle at top right, #f0fdf4 0%, #f0f9ff 100%); padding: clamp(15px, 4vw, 50px) 15px; -webkit-overflow-scrolling: touch; }
+        .auth-card { max-width: 800px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.05); padding: clamp(20px, 5vw, 45px); border: 1px solid rgba(226,232,240,0.8); position: relative; }
+        .brand-header { text-align: center; margin-bottom: clamp(20px, 4vw, 40px); }
+        .brand-header h1 { font-size: clamp(24px, 5vw, 32px); font-weight: 800; background: var(--brand-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        .survey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
-        .full-span { grid-column: span 2; }
+        /* Auto-shifting Survey Layout Engine */
+        .survey-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(12px, 3vw, 24px); margin-top: 20px; }
+        .full-span { grid-column: 1 / -1; }
         .form-group { display: flex; flex-direction: column; gap: 8px; position: relative; }
-        label { font-size: 13px; font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select, textarea { padding: 14px 16px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 15px; background: #f8fafc; transition: var(--transition-smooth); outline: none; }
+        label { font-size: 12px; font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select, textarea { padding: 14px 16px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 15px; background: #f8fafc; transition: var(--transition-smooth); outline: none; width: 100%; -webkit-appearance: none; }
         input:focus, select:focus, textarea:focus { border-color: var(--brand-primary); background: white; box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15); }
         
-        .section-divider { grid-column: span 2; margin: 25px 0 10px 0; padding-bottom: 10px; border-bottom: 2px solid #f1f5f9; font-size: 15px; font-weight: 800; color: var(--brand-primary); display: flex; align-items: center; gap: 10px; }
-        .btn-submit { background: var(--brand-gradient); color: white; border: none; padding: 16px; font-weight: 700; border-radius: 12px; font-size: 16px; cursor: pointer; transition: var(--transition-smooth); width: 100%; margin-top: 30px; }
+        .section-divider { grid-column: 1 / -1; margin: 25px 0 10px 0; padding-bottom: 10px; border-bottom: 2px solid #f1f5f9; font-size: 15px; font-weight: 800; color: var(--brand-primary); display: flex; align-items: center; gap: 10px; }
+        .btn-submit { background: var(--brand-gradient); color: white; border: none; padding: 16px; font-weight: 700; border-radius: 12px; font-size: 16px; cursor: pointer; transition: var(--transition-smooth); width: 100%; margin-top: 20px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.4); }
+        .btn-submit:active { transform: translateY(0); }
 
         /* Real-time Visual Integrity Indicators & Password Helpers */
-        .pass-view-toggle { position: absolute; right: 16px; top: 44px; cursor: pointer; color: #64748b; z-index: 5; }
+        .pass-view-toggle { position: absolute; right: 16px; top: 42px; cursor: pointer; color: #64748b; z-index: 5; padding: 4px; }
         .strength-meter-bar { height: 4px; border-radius: 2px; background: #e2e8f0; margin-top: 6px; transition: width 0.3s ease, background 0.3s ease; width: 0%; }
-        .completion-track-node { position: sticky; top: -45px; background: white; padding: 10px 0; z-index: 50; border-bottom: 1px solid #f1f5f9; margin-bottom: 15px; }
+        .completion-track-node { position: sticky; top: -51px; background: white; padding: 10px 0; z-index: 50; border-bottom: 1px solid #f1f5f9; margin-bottom: 15px; }
         .completion-track-fill { height: 6px; border-radius: 3px; background: linear-gradient(90deg, #38bdf8, #0284c7); width: 0%; transition: width 0.4s ease; }
 
         /* ================= PREMIUM WAITLIST ANIMATED GATE ================= */
-        .waitlist-container { height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background: #0f172a; position: relative; overflow: hidden; }
-        .bg-glow { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(2,132,199,0.15) 0%, transparent 70%); top: -10%; right: -10%; animation: floatGlow 10s infinite alternate; }
-        @keyframes floatGlow { 0% { transform: translate(0,0); } 100% { transform: translate(-50px, 50px); } }
+        .waitlist-container { height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; background: #0f172a; position: relative; overflow-y: auto; padding: 20px; }
+        .bg-glow { position: absolute; width: min(600px, 100vw); height: min(600px, 100vw); background: radial-gradient(circle, rgba(2,132,199,0.15) 0%, transparent 70%); top: -10%; right: -10%; animation: floatGlow 10s infinite alternate; pointer-events: none; }
+        @keyframes floatGlow { 0% { transform: translate(0,0); } 100% { transform: translate(-30px, 30px); } }
         
-        .waitlist-card { position: relative; z-index: 10; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); padding: 50px 40px; border-radius: 28px; max-width: 580px; text-align: center; color: white; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+        .waitlist-card { position: relative; z-index: 10; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); padding: clamp(20px, 5vw, 50px) clamp(15px, 4vw, 40px); border-radius: 28px; width: 100%; max-width: 580px; text-align: center; color: white; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
         
-        /* High-fidelity CSS Motion Graphics Loop */
-        .radar-box { position: relative; width: 120px; height: 120px; margin: 0 auto 30px auto; display: flex; align-items: center; justify-content: center; }
+        .radar-box { position: relative; width: 100px; height: 100px; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center; }
         .radar-circle { position: absolute; width: 100%; height: 100%; border: 2px solid var(--brand-primary); border-radius: 50%; opacity: 0; animation: pulseRadar 3s cubic-bezier(0.215, 0.610, 0.355, 1) infinite; }
         .radar-circle:nth-child(2) { animation-delay: 1s; }
         .radar-circle:nth-child(3) { animation-delay: 2s; }
-        .radar-core { width: 50px; height: 50px; background: var(--brand-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 0 25px var(--brand-primary); z-index: 2; }
+        .radar-core { width: 48px; height: 48px; background: var(--brand-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 0 25px var(--brand-primary); z-index: 2; }
         @keyframes pulseRadar { 0% { transform: scale(0.4); opacity: 0; } 50% { opacity: 0.5; } 100% { transform: scale(1.3); opacity: 0; } }
 
-        /* ================= APPLICANT APPROVED DASHBOARD ================= */
-        .dashboard-layout { display: grid; grid-template-columns: 280px 1fr; height: 100vh; width: 100vw; }
-        .sidebar { background: var(--bg-dark-core); color: white; padding: 30px 24px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid rgba(255,255,255,0.05); }
+        /* ================= DYNAMIC AUTOMATIC DASHBOARD SIDEBAR ENGINE ================= */
+        .dashboard-layout { display: grid; grid-template-columns: 280px 1fr; height: 100vh; width: 100vw; overflow: hidden; transition: var(--transition-smooth); }
+        .sidebar { background: var(--bg-dark-core); color: white; padding: 30px 24px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid rgba(255,255,255,0.05); z-index: 100; transition: var(--transition-smooth); }
         .menu-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 12px; cursor: pointer; color: #94a3b8; font-weight: 600; margin-bottom: 8px; transition: var(--transition-smooth); }
         .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.06); color: white; }
         .menu-item.active { color: #38bdf8; }
 
-        .workspace { overflow-y: auto; height: 100vh; background: #f1f5f9; }
-        .content-frame { padding: 40px; max-width: 1300px; margin: 0 auto; }
+        /* Mobile Dynamic Top Action bar Component */
+        .mobile-navbar { display: none; background: var(--bg-dark-core); color: white; padding: 12px 20px; align-items: center; justify-content: space-between; height: 60px; z-index: 90; }
+        .mobile-nav-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; padding: 6px; }
+
+        .workspace { overflow-y: auto; height: 100%; background: #f1f5f9; -webkit-overflow-scrolling: touch; }
+        .content-frame { padding: clamp(15px, 4vw, 40px); max-width: 1400px; margin: 0 auto; width: 100%; }
 
         /* Advanced Fluid Image Slideshow */
-        .hero-slider { position: relative; width: 100%; height: 320px; border-radius: 24px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 15px 30px rgba(0,0,0,0.04); }
+        .hero-slider { position: relative; width: 100%; height: clamp(160px, 30vw, 320px); border-radius: 24px; overflow: hidden; margin-bottom: clamp(20px, 4vw, 40px); box-shadow: 0 15px 30px rgba(0,0,0,0.04); }
         .slide-frame { position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transform: scale(1.03); transition: opacity 1.2s ease, transform 1.2s ease; display: flex; align-items: flex-end; }
         .slide-frame.active { opacity: 1; transform: scale(1); }
-        .slide-tint { background: linear-gradient(180deg, rgba(15,23,42,0) 20%, rgba(15,23,42,0.85) 100%); width: 100%; height: 100%; display: flex; align-items: flex-end; padding: 45px; }
+        .slide-tint { background: linear-gradient(180deg, rgba(15,23,42,0) 20%, rgba(15,23,42,0.85) 100%); width: 100%; height: 100%; display: flex; align-items: flex-end; padding: clamp(15px, 4vw, 45px); }
+        .slide-tint h3 { font-size: clamp(16px, 4vw, 24px); font-weight: 800; }
+        .slide-tint p { font-size: clamp(12px, 2vw, 14px); }
 
         /* Live Feed Grid Architecture */
-        .feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 20px; }
-        .jobs-matrix { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }
-        .job-card { background: white; border-radius: 20px; padding: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01); border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; transition: var(--transition-smooth); position: relative; overflow: hidden; }
+        .feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 20px; wrap: wrap; }
+        .jobs-matrix { display: grid; grid-template-columns: repeat(auto-fill, minmax(clamp(280px, 100%, 380px), 1fr)); gap: clamp(15px, 3vw, 25px); }
+        .job-card { background: white; border-radius: 20px; padding: clamp(18px, 4vw, 28px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; transition: var(--transition-smooth); position: relative; overflow: hidden; }
         .job-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); border-color: #cbd5e1; }
         
-        .time-badge { position: absolute; top: 24px; right: 24px; font-size: 12px; font-weight: 700; color: var(--brand-primary); background: #f0f9ff; padding: 6px 12px; border-radius: 20px; }
-        .salary-label { font-size: 20px; font-weight: 800; color: #0f172a; margin: 15px 0; display: flex; align-items: center; gap: 6px; }
+        .time-badge { position: absolute; top: 24px; right: 24px; font-size: 11px; font-weight: 700; color: var(--brand-primary); background: #f0f9ff; padding: 6px 12px; border-radius: 20px; }
+        .salary-label { font-size: clamp(16px, 3vw, 20px); font-weight: 800; color: #0f172a; margin: 15px 0; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
         /* Corporate Identity Profile Structure */
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: white; padding: 40px; border-radius: 24px; border: 1px solid #e2e8f0; margin-top: 20px; }
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(20px, 4vw, 40px); background: white; padding: clamp(20px, 4vw, 40px); border-radius: 24px; border: 1px solid #e2e8f0; margin-top: 20px; }
         .stat-badge { background: #f8fafc; padding: 20px; border-radius: 16px; text-align: center; border: 1px solid #f1f5f9; }
 
         /* Realtime Communication Sub-system View */
-        .messenger-view { display: flex; flex-direction: column; height: 100vh; background: #e2e8f0; }
-        .msg-container { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #f8fafc; }
-        .msg-bubble { max-width: 65%; padding: 12px 18px; border-radius: 16px; font-size: 15px; line-height: 1.5; }
+        .messenger-view { display: flex; flex-direction: column; height: 100%; background: #e2e8f0; }
+        .msg-container { flex: 1; padding: clamp(15px, 4vw, 30px); overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #f8fafc; -webkit-overflow-scrolling: touch; }
+        .msg-bubble { max-width: min(75%, 500px); padding: 12px 18px; border-radius: 16px; font-size: 15px; line-height: 1.5; word-break: break-word; }
         .msg-bubble.sent { background: var(--brand-primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
         .msg-bubble.received { background: white; color: black; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid #e2e8f0; }
 
-        @media(max-width: 768px) {
-            .dashboard-layout { grid-template-columns: 1fr; }
-            .sidebar { display: none; }
-            .survey-grid { grid-template-columns: 1fr; }
-            .full-span, .section-divider { grid-column: unset; }
-            .about-grid { grid-template-columns: 1fr; }
-            .feed-header { flex-direction: column; align-items: flex-start; }
+        /* ================= MEDIA RESPONSIVE BREAKPOINT SYSTEM ================= */
+        @media (max-width: 868px) {
+            .dashboard-layout { grid-template-columns: 1fr; grid-template-rows: 60px 1fr; }
+            .sidebar { position: fixed; left: -280px; top: 60px; bottom: 0; width: 280px; height: calc(100vh - 60px); box-shadow: 15px 0 30px rgba(0,0,0,0.15); padding: 20px; }
+            .sidebar.mobile-active { left: 0; }
+            .mobile-navbar { display: flex; }
+            .feed-header { flex-direction: column; align-items: stretch; gap: 15px; }
+            #job-search-input-wrapper { max-width: 100% !important; }
+            .workspace { height: calc(100vh - 60px); }
+            .messenger-view { height: calc(100vh - 60px); }
         }
     </style>
 </head>
@@ -128,7 +138,7 @@
 
             <div class="brand-header">
                 <h1>ZUKA JOBS</h1>
-                <p style="color: var(--text-muted); font-size: 15px; margin-top: 5px;" id="auth-sub">Global Talent Placement Pipeline — Enterprise Configuration Panel</p>
+                <p style="color: var(--text-muted); font-size: 14px; margin-top: 5px;" id="auth-sub">Global Talent Placement Pipeline — Enterprise Configuration Panel</p>
             </div>
 
             <div id="admin-intercept-banner" class="hidden" style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:12px; padding:20px; text-align:center; margin-bottom:20px;">
@@ -239,23 +249,30 @@
                 <div class="radar-circle"></div>
                 <div class="radar-core"><i class="fa-solid fa-fingerprint"></i></div>
             </div>
-            <h2 style="font-size:26px; font-weight:800; margin-bottom:12px; letter-spacing:-0.5px;">Security Clearance Impending</h2>
-            <p style="color:#94a3b8; font-size:15px; line-height:1.6; margin-bottom:25px;">
+            <h2 style="font-size:24px; font-weight:800; margin-bottom:12px; letter-spacing:-0.5px;">Security Clearance Impending</h2>
+            <p style="color:#94a3b8; font-size:14px; line-height:1.6; margin-bottom:25px;">
                 Your background survey properties, parent indicators, and citizenship credentials have been compiled into an execution block. Zuka Jobs system administrators are auditing your node parameters for verification.
             </p>
             
             <div style="background:rgba(2,132,199,0.1); border:1px solid rgba(2,132,199,0.2); padding:16px; border-radius:12px; margin-bottom:30px;">
-                <span style="font-size:13px; font-weight:700; color:#38bdf8; display:flex; align-items:center; justify-content:center; gap:8px;">
+                <span style="font-size:12px; font-weight:700; color:#38bdf8; display:flex; align-items:center; justify-content:center; gap:8px;">
                     <i class="fa-solid fa-circle-notch fa-spin"></i> PIPELINE LISTENING FOR REAL-TIME PERMISSION DISPATCH
                 </span>
             </div>
             
-            <button onclick="disconnectSession()" style="background:transparent; border:1px solid #475569; color:#94a3b8; padding:12px 24px; border-radius:10px; font-weight:600; cursor:pointer;">Terminate Session Securely</button>
+            <button onclick="disconnectSession()" style="background:transparent; border:1px solid #475569; color:#94a3b8; padding:12px 24px; border-radius:10px; font-weight:600; cursor:pointer; width:100%;">Terminate Session Securely</button>
         </div>
     </div>
 
     <div id="screen-dashboard" class="dashboard-layout hidden">
-        <aside class="sidebar">
+        
+        <div class="mobile-navbar">
+            <button class="mobile-nav-btn" id="mobile-drawer-toggle"><i class="fa-solid fa-bars"></i></button>
+            <div style="font-size:18px; font-weight:800; background:var(--brand-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent;"><i class="fa-solid fa-bolt"></i> ZUKA</div>
+            <button class="mobile-nav-btn" onclick="disconnectSession()"><i class="fa-solid fa-power-off" style="color:#cbd5e1;"></i></button>
+        </div>
+
+        <aside class="sidebar" id="dashboard-sidebar-panel">
             <div>
                 <div style="font-size:22px; font-weight:800; background:var(--brand-gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:40px;"><i class="fa-solid fa-bolt"></i> ZUKA JOBS</div>
                 <nav>
@@ -265,11 +282,11 @@
                 </nav>
             </div>
             <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:20px; display:flex; align-items:center; justify-content:between;">
-                <div>
-                    <h4 id="lbl-profile-name" style="font-size:14px; font-weight:700; max-width:160px; overflow:hidden; text-overflow:ellipsis;">User Element</h4>
-                    <span style="font-size:11px; color:#10b981; font-weight:600;"><i class="fa-solid fa-circle" style="font-size:8px;"></i> Connection Verified</span>
+                <div style="overflow:hidden;">
+                    <h4 id="lbl-profile-name" style="font-size:14px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">User Element</h4>
+                    <span style="font-size:11px; color:#10b981; font-weight:600;"><i class="fa-solid fa-circle" style="font-size:7px;"></i> Online Verified</span>
                 </div>
-                <button onclick="disconnectSession()" class="logout-btn" style="background:none; border:none; color:#64748b; font-size:18px; cursor:pointer; margin-left:auto;"><i class="fa-solid fa-power-off"></i></button>
+                <button onclick="disconnectSession()" class="logout-btn" style="background:none; border:none; color:#64748b; font-size:18px; cursor:pointer; margin-left:auto; padding:4px;"><i class="fa-solid fa-power-off"></i></button>
             </div>
         </aside>
 
@@ -278,56 +295,56 @@
                 <div class="hero-slider" id="slider-frame-wrapper"></div>
                 <div class="feed-header">
                     <div>
-                        <h2 style="font-size:24px; font-weight:800;">Realtime Employment Feed</h2>
+                        <h2 style="font-size:22px; font-weight:800; letter-spacing:-0.5px;">Realtime Employment Feed</h2>
                         <p style="color:var(--text-muted); font-size:14px;">High-yield computational tasks matching your filed parameters</p>
                     </div>
                     
-                    <div style="display:flex; gap:10px; background:white; padding:10px 16px; border-radius:12px; border:1px solid #cbd5e1; width:100%; max-width:380px;">
+                    <div id="job-search-input-wrapper" style="display:flex; gap:10px; background:white; padding:12px 16px; border-radius:12px; border:1px solid #cbd5e1; width:100%; max-width:380px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                         <i class="fa-solid fa-magnifying-glass" style="align-self:center; color:#94a3b8;"></i>
-                        <input type="text" id="job-search-input" placeholder="Search tasks by title or skill keyword..." style="border:none; background:transparent; padding:0; width:100%; font-size:14px;">
+                        <input type="text" id="job-search-input" placeholder="Search tasks by title or firm..." style="border:none; background:transparent; padding:0; width:100%; font-size:14px; outline:none; box-shadow:none;">
                     </div>
                 </div>
                 <div class="jobs-matrix" id="feed-jobs-target"></div>
             </div>
 
             <div id="view-chat" class="messenger-view hidden">
-                <div style="background:white; padding:20px 40px; border-bottom:1px solid #e2e8f0; display:flex; align-items:center;">
+                <div style="background:white; padding:15px 25px; border-bottom:1px solid #e2e8f0; display:flex; align-items:center;">
                     <div>
-                        <h3 style="font-size:16px; font-weight:700;">Central Support Console</h3>
+                        <h3 style="font-size:15px; font-weight:700;">Central Support Console</h3>
                         <p style="color:#10b981; font-size:12px; font-weight:600;"><i class="fa-solid fa-bolt"></i> Live Admin Pipeline Connected</p>
                     </div>
                 </div>
                 <div class="msg-container" id="box-chat-messages"></div>
-                <div style="background:white; padding:20px 40px; display:flex; align-items:center; gap:20px; border-top:1px solid #e2e8f0;">
-                    <input type="text" id="inp-chat-message" style="flex:1; background:#f1f5f9; padding: 14px;" placeholder="Type support payload transmission code...">
-                    <button id="btn-chat-send" style="background:var(--brand-gradient); color:white; border:none; width:48px; height:48px; border-radius:50%; cursor:pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+                <div style="background:white; padding:15px 25px; display:flex; align-items:center; gap:15px; border-top:1px solid #e2e8f0;">
+                    <input type="text" id="inp-chat-message" style="flex:1; background:#f1f5f9; padding:12px 16px;" placeholder="Type payload response code...">
+                    <button id="btn-chat-send" style="background:var(--brand-gradient); color:white; border:none; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i class="fa-solid fa-paper-plane" style="font-size:14px;"></i></button>
                 </div>
             </div>
 
             <div id="view-about" class="content-frame hidden">
-                <h2 style="font-size:28px; font-weight:800; margin-bottom:10px;">Corporate System Infrastructure</h2>
-                <p style="color:var(--text-muted); margin-bottom:30px;">Historical data parameters and institutional matrix configurations.</p>
+                <h2 style="font-size:24px; font-weight:800; margin-bottom:6px; letter-spacing:-0.5px;">Corporate System Infrastructure</h2>
+                <p style="color:var(--text-muted); margin-bottom:25px; font-size:14px;">Historical data parameters and institutional matrix configurations.</p>
                 
                 <div class="about-grid">
                     <div>
-                        <h3 style="margin-bottom:15px; font-weight:700;">Platform Evolution Abstract</h3>
-                        <p style="color:#475569; line-height:1.7; font-size:15px; margin-bottom:15px;">
+                        <h3 style="margin-bottom:12px; font-weight:700; font-size:17px;">Platform Evolution Abstract</h3>
+                        <p style="color:#475569; line-height:1.6; font-size:14px; margin-bottom:12px;">
                             Established in the year <b>2001</b> under master administrative conceptual design by <b>Yuengha</b>, Zuka Jobs has evolved into an elite labor-matching framework. 
                         </p>
-                        <p style="color:#475569; line-height:1.7; font-size:15px;">
+                        <p style="color:#475569; line-height:1.6; font-size:14px;">
                             The platform implements automated resource routing mechanics designed to enforce a performance-scaled compensation model: <b>it systematically dispenses higher payment ratios to workforce nodes that display higher data volume and task completion operations.</b>
                         </p>
                     </div>
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                         <div class="stat-badge">
-                            <i class="fa-solid fa-users" style="font-size:28px; color:var(--brand-primary); margin-bottom:10px;"></i>
-                            <h4 style="font-size:24px; font-weight:800;">20,000+</h4>
-                            <p style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-top:5px;">Workers Employed</p>
+                            <i class="fa-solid fa-users" style="font-size:24px; color:var(--brand-primary); margin-bottom:8px;"></i>
+                            <h4 style="font-size:20px; font-weight:800;">20,000+</h4>
+                            <p style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-top:4px;">Workers Employed</p>
                         </div>
                         <div class="stat-badge">
-                            <i class="fa-solid fa-timeline" style="font-size:28px; color:var(--accent-success); margin-bottom:10px;"></i>
-                            <h4 style="font-size:24px; font-weight:800;">2001</h4>
-                            <p style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-top:5px;">Operations Inception</p>
+                            <i class="fa-solid fa-timeline" style="font-size:24px; color:var(--accent-success); margin-bottom:8px;"></i>
+                            <h4 style="font-size:20px; font-weight:800;">2001</h4>
+                            <p style="font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-top:4px;">Inception Year</p>
                         </div>
                     </div>
                 </div>
@@ -368,6 +385,12 @@
 
         // Web Audio Inbound Alert Notification Hook API Generator
         const notificationSoundPing = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-600.wav');
+
+        // Dynamic Interactive Mobile Navigation Drawer Slide Triggers
+        const sidePanelNode = document.getElementById('dashboard-sidebar-panel');
+        document.getElementById('mobile-drawer-toggle').addEventListener('click', () => {
+            sidePanelNode.classList.toggle('mobile-active');
+        });
 
         // Toggle Password Form Element Visibility Mode Action
         document.getElementById('trigger-pass-toggle').addEventListener('click', function() {
@@ -543,7 +566,7 @@
             }
 
             if(elementsFilteredList.length === 0) {
-                targetGrid.innerHTML = `<div class="full-span" style="text-align:center; padding:40px; color:var(--text-muted); grid-column:span 2;">No system tasks match your specific search criteria parameter filters.</div>`;
+                targetGrid.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted); grid-column:1/-1;">No system tasks match your specific search criteria parameter filters.</div>`;
                 return;
             }
 
@@ -553,12 +576,12 @@
                 card.innerHTML = `
                     <div>
                         <span class="time-badge"><i class="fa-regular fa-clock"></i> ${j.relativeTime || 'Posted 2 min ago'}</span>
-                        <h3 style="font-size:18px; font-weight:700; margin-bottom:4px; max-width:75%;">${j.title}</h3>
-                        <h5 style="color:var(--brand-primary); font-weight:700; font-size:13px; margin-bottom:12px; text-transform:uppercase;">${j.company}</h5>
+                        <h3 style="font-size:17px; font-weight:700; margin-bottom:4px; max-width:72%; line-height:1.3;">${j.title}</h3>
+                        <h5 style="color:var(--brand-primary); font-weight:700; font-size:12px; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.5px;">${j.company}</h5>
                         <p style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:20px;">${j.description}</p>
                     </div>
                     <div>
-                        <div class="salary-label"><span style="font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Yield Metric:</span> ${j.payAmount || 'Ksh 3,500 / Day'}</div>
+                        <div class="salary-label"><span style="font-size:11px; color:var(--text-muted); font-weight:700; text-transform:uppercase; letter-spacing:0.3px;">Yield Metric:</span> ${j.payAmount || 'Ksh 3,500 / Day'}</div>
                         <button class="btn-submit" style="padding:12px; font-size:14px; margin-top:0;" onclick="alert('Operation Registry Filed! Administrative task node informed.')">Apply For Task</button>
                     </div>
                 `;
@@ -573,7 +596,7 @@
                 const fr = document.createElement('div');
                 fr.className = `slide-frame ${idx === 0 ? 'active' : ''}`;
                 fr.style.backgroundImage = `url('${sl.url}')`;
-                fr.innerHTML = `<div class="slide-tint"><div style="color:white;"><h3>${sl.title}</h3><p style="opacity:0.8; font-size:14px; margin-top:5px;">${sl.desc}</p></div></div>`;
+                fr.innerHTML = `<div class="slide-tint"><div style="color:white;"><h3>${sl.title}</h3><p style="opacity:0.8; margin-top:5px;">${sl.desc}</p></div></div>`;
                 sWrapper.appendChild(fr);
             });
             let slPtr = 0;
@@ -631,6 +654,9 @@
             document.getElementById('tab-jobs').classList.remove('active');
             document.getElementById('tab-chat').classList.remove('active');
             document.getElementById('tab-about').classList.remove('active');
+
+            // Automatically close open side drawer panel matrix on mobile screen triggers
+            sidePanelNode.classList.remove('mobile-active');
 
             if(t === 'jobs') { document.getElementById('view-jobs').classList.remove('hidden'); document.getElementById('tab-jobs').classList.add('active'); }
             else if(t === 'chat') { document.getElementById('view-chat').classList.remove('hidden'); document.getElementById('tab-chat').classList.add('active'); document.getElementById('box-chat-messages').scrollTop = document.getElementById('box-chat-messages').scrollHeight; }
